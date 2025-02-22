@@ -98,7 +98,6 @@ const VoiceNote = () => {
 
 	return (
 		<div className="voice-recorder-container">
-			<h1>Voice Recorder</h1>
 
 			{error && <div className="error-message">⚠️ Error: {error}</div>}
 

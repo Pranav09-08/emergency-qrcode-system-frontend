@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Card, Button,Spinner, Alert } from "react-bootstrap";
+import { Container, Card, Button, Spinner, Alert } from "react-bootstrap";
 import VoiceNote from "./VoiceNote";
 
 const EmployeeDetails = () => {
@@ -21,7 +21,7 @@ const EmployeeDetails = () => {
             setError("Invalid QR Code");
             return;
         }
-        
+
 
         axios.get(`https://emergency-qrcode-system-backend.onrender.com/api/employees/${qr_code}`)
             .then(response => {
@@ -118,13 +118,15 @@ const EmployeeDetails = () => {
 
                             <Button
                                 variant="danger"
-                                className="w-100 mb-3 p-3 fw-bold"
+                                className="w-100 mb-3 p-4 fw-bold fs-4"
                                 onClick={() => handleSOS(employee.user_id)} // Pass employee.user_id dynamically
                             >
                                 🚨 SOS Alert
                             </Button>
 
-                            <VoiceNote/>
+                            {/* Add custom styling for VoiceNote component, assuming it has a button for recording */}
+                            <VoiceNote className="w-100 mb-3 p-4 fs-4" />
+
                         </>
                     ) : (
                         <div className="text-center">
