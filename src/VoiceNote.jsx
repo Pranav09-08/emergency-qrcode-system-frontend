@@ -78,11 +78,11 @@ const VoiceNote = () => {
 				`https://emergency-qrcode-system-backend.onrender.com/recordings/voice/recordings/${userId}`,
 				formData,
 				{
-				  headers: { "Content-Type": "multipart/form-data" },
-				  timeout: 10000,
+					headers: { "Content-Type": "multipart/form-data" },
+					timeout: 10000,
 				}
-			  );
-			  
+			);
+
 
 			if (response.status === 201) {
 				setUploadSuccess(true);
@@ -110,7 +110,7 @@ const VoiceNote = () => {
 					<button
 						onClick={startRecording}
 						disabled={isUploading}
-						className="record-btn"
+						className="btn btn-primary btn-lg w-100 mb-3"
 					>
 						🎙 Start
 					</button>
@@ -120,24 +120,29 @@ const VoiceNote = () => {
 					<button
 						onClick={stopRecording}
 						disabled={status !== "recording"}
-						className="stop-btn active"
+						className="btn btn-danger btn-lg w-100 mb-3 active"
 					>
 						⏹ Stop
 					</button>
 				)}
 			</div>
 
-			{isUploading && (
-				<div className="upload-status">⏳ Uploading recording...</div>
-			)}
 
-			{uploadSuccess && (
-				<div className="success-message">
-					✅ Recording submitted successfully!
-				</div>
-			)}
+			{
+		isUploading && (
+			<div className="upload-status">⏳ Uploading recording...</div>
+		)
+	}
 
-			<style jsx="true">{`
+	{
+		uploadSuccess && (
+			<div className="success-message">
+				✅ Recording submitted successfully!
+			</div>
+		)
+	}
+
+	<style jsx="true">{`
 				.voice-recorder-container {
 					padding: 20px;
 					max-width: 600px;
@@ -193,7 +198,7 @@ const VoiceNote = () => {
 					color: #666;
 				}
 			`}</style>
-		</div>
+		</div >
 	);
 };
 
