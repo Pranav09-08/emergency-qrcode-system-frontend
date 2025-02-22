@@ -21,11 +21,13 @@ const EmployeeDetails = () => {
             setError("Invalid QR Code");
             return;
         }
+        
 
         axios.get(`https://emergency-qrcode-system-backend.onrender.com/api/employees/${qr_code}`)
             .then(response => {
                 console.log(response.data); // Log the response to check if the data is being received correctly
                 setEmployee(response.data);
+                localStorage.setItem("user_id", response.data.user_id);
             })
             .catch(err => {
                 console.error("Error fetching employee details:", err);
