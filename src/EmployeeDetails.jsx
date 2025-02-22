@@ -6,6 +6,7 @@ import { Container, Card, Button, Modal, Spinner, Alert } from "react-bootstrap"
 const EmployeeDetails = () => {
     const [searchParams] = useSearchParams();
     const qr_code = searchParams.get("id");
+    console.log(qr_code); // Check if qr_code is being fetched correctly    
     const [employee, setEmployee] = useState(null);
     const [error, setError] = useState(null);
     const [isRecording, setIsRecording] = useState(false);
@@ -19,9 +20,10 @@ const EmployeeDetails = () => {
             setError("Invalid QR Code");
             return;
         }
-
+    
         axios.get(`https://emergency-qrcode-system-backend.onrender.com/api/employees/${qr_code}`)
             .then(response => {
+                console.log(response.data); // Log the response to check if the data is being received correctly
                 setEmployee(response.data);
             })
             .catch(err => {
@@ -29,6 +31,7 @@ const EmployeeDetails = () => {
                 setError("Employee not found");
             });
     }, [qr_code]);
+    
 
     const handleSOS = () => {
         setShowSOSModal(true);
