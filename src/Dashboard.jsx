@@ -4,6 +4,7 @@ import { FaSignOutAlt, FaBell, FaUserPlus, FaExclamationCircle } from 'react-ico
 import axios from 'axios';
 import './css/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import IncidentReportsCard from './IncidentLogs';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -88,28 +89,7 @@ const Dashboard = () => {
                     </Button>
                   </div>
 
-                  <Card className="mt-4 border-0 shadow-sm rounded-lg incident-card">
-                    <Card.Body>
-                      <h5 className="text-secondary">
-                        <FaExclamationCircle className="me-2" />
-                        Incident Reports
-                      </h5>
-                      {incidentReports.length > 0 ? (
-                        <ListGroup variant="flush">
-                          {incidentReports.map((report, index) => (
-                            <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
-                              <span>{report.title}</span>
-                              <Badge bg={report.status === 'Pending' ? 'warning' : 'success'}>
-                                {report.status}
-                              </Badge>
-                            </ListGroup.Item>
-                          ))}
-                        </ListGroup>
-                      ) : (
-                        <Alert variant="info">No incident reports found.</Alert>
-                      )}
-                    </Card.Body>
-                  </Card>
+                 <IncidentReportsCard/>
 
                   <div className="mt-4">
                     <Button

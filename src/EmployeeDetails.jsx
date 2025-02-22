@@ -97,43 +97,7 @@ const EmployeeDetails = () => {
         }
     };
     
-
-
-   
-    // const startRecording = async () => {
-    //     try {
-    //         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    //         const mediaRecorder = new MediaRecorder(stream);
-    //         mediaRecorderRef.current = mediaRecorder;
-    //         audioChunksRef.current = [];
-
-    //         mediaRecorder.ondataavailable = (event) => {
-    //             if (event.data.size > 0) {
-    //                 audioChunksRef.current.push(event.data);
-    //             }
-    //         };
-
-    //         mediaRecorder.onstop = () => {
-    //             const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-    //             const audioUrl = URL.createObjectURL(audioBlob);
-    //             setAudioUrl(audioUrl);
-    //         };
-
-    //         mediaRecorder.start();
-    //         setIsRecording(true);
-    //     } catch (error) {
-    //         console.error("Error accessing microphone:", error);
-    //         alert("⚠️ Microphone access denied.");
-    //     }
-    // };
-
-    // const stopRecording = () => {
-    //     if (mediaRecorderRef.current) {
-    //         mediaRecorderRef.current.stop();
-    //         setIsRecording(false);
-    //     }
-    // };
-
+    
     return (
         <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
             <Card className="shadow-lg p-4 w-100 mx-auto" style={{ maxWidth: "500px", borderRadius: "16px", background: "#ffffff" }}>
