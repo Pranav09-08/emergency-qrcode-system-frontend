@@ -45,7 +45,6 @@ const EmployeeDetails = () => {
             console.error("Error sending SOS alert:", error.response?.data || error.message);
             alert("Failed to send SOS alert. Please try again.");
         }
-        setShowSOSModal(true);
     };
 
 
@@ -152,23 +151,6 @@ const EmployeeDetails = () => {
                 </Card.Body>
             </Card>
 
-            <Modal show={showSOSModal} onHide={() => setShowSOSModal(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm SOS Alert</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Are you sure you want to send an SOS alert to
-                    <strong> {employee?.emergency_contact_name} ({employee?.emergency_contact_phone})</strong>?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowSOSModal(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="danger" onClick={confirmSOS}>
-                        Yes, Send Alert
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </Container>
     );
 };
