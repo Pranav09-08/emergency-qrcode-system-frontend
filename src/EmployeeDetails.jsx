@@ -124,7 +124,7 @@ const EmployeeDetails = () => {
                                 🚨 SOS Alert
                             </Button>
 
-                            <VoiceNote/>
+                            {/* <VoiceNote/> */}
 
 
                             <div className="text-left">
