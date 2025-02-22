@@ -15,18 +15,39 @@ const IncidentReportsCard = () => {
                 const response = await axios.get(
                     "https://emergency-qrcode-system-backend.onrender.com/incident-log/get-incident"
                 );
-
-                // Fetch recordings for each user in the incident logs
-                const logsWithRecordings = await Promise.all(
-                    response.data.map(async (log) => {
-                        const recordingsResponse = await axios.get(
-                            `https://emergency-qrcode-system-backend.onrender.com/recordings/user/${log.user_id}`
-                        );
-                        return { ...log, recordings: recordingsResponse.data };
-                    })
-                );
-
-                setIncidentLogs(logsWithRecordings || []);
+    
+                console.log("Incident Logs API Response:", response.data);
+    
+                // Check if response.data is an array before mapping
+                if (Array.isArray(response.data)) {
+                    // Fetch recordings for each user in the incident logs
+                    const logsWithRecordings = await Promise.all(
+                        response.data.map(async (log) => {
+                            try {
+                                const recordingsResponse = await axios.get(
+                                    `https://emergency-qrcode-system-backend.onrender.com/recordings/user/${log.user_id}`
+                                );
+    
+                                console.log(`Recordings for user ${log.user_id}:`, recordingsResponse.data);
+    
+                                // Ensure recordings is always an array
+                                const recordings = Array.isArray(recordingsResponse.data)
+                                    ? recordingsResponse.data
+                                    : [];
+    
+                                return { ...log, recordings };
+                            } catch (recordingError) {
+                                console.error(`Error fetching recordings for user ${log.user_id}:`, recordingError);
+                                return { ...log, recordings: [] }; // Return empty array on error
+                            }
+                        })
+                    );
+    
+                    setIncidentLogs(logsWithRecordings);
+                } else {
+                    console.error("Unexpected Incident Logs response structure:", response.data);
+                    setIncidentLogs([]); // If response is not an array, set empty state
+                }
             } catch (err) {
                 setError("Failed to fetch incident logs");
                 console.error("Error fetching incident logs:", err);
@@ -34,9 +55,10 @@ const IncidentReportsCard = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchIncidentLogs();
     }, []);
+    
 
     return (
         <Card className="mt-4 border-0 shadow-sm rounded-lg incident-card">
@@ -52,7 +74,10 @@ const IncidentReportsCard = () => {
                 ) : incidentLogs.length > 0 ? (
                     <ListGroup variant="flush">
                         {incidentLogs.map((log, index) => (
-                            <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+                            <ListGroup.Item
+                                key={index}
+                                className="d-flex justify-content-between align-items-center"
+                            >
                                 <div>
                                     <strong>User:</strong> {log.user_id} <br />
                                     <strong>Scanned By:</strong> {log.scanned_by_name} ({log.scanned_by_phone}) <br />
@@ -60,14 +85,14 @@ const IncidentReportsCard = () => {
                                     <strong>Time:</strong> {new Date(log.scan_time).toLocaleString()}
 
                                     {/* Display Recordings */}
-                                    {log.recordings.length > 0 ? (
+                                    {Array.isArray(log.recordings) && log.recordings.length > 0 ? (
                                         <div className="mt-3">
                                             <strong>Recordings:</strong>
                                             <ul>
                                                 {log.recordings.map((rec) => (
                                                     <li key={rec.id}>
                                                         <audio controls>
-                                                            <source src={`.${rec.path}`} type={rec.mimeType} />
+                                                            <source src={rec.path} type={rec.mimeType} />
                                                             Your browser does not support audio playback.
                                                         </audio>
                                                     </li>
@@ -75,7 +100,9 @@ const IncidentReportsCard = () => {
                                             </ul>
                                         </div>
                                     ) : (
-                                        <div className="mt-3 text-muted">No recordings found for this user.</div>
+                                        <div className="mt-3 text-muted">
+                                            No recordings found for this user.
+                                        </div>
                                     )}
                                 </div>
                                 <Badge bg="info">New</Badge>
@@ -87,6 +114,7 @@ const IncidentReportsCard = () => {
                 )}
             </Card.Body>
         </Card>
+
     );
 };
 
