@@ -26,7 +26,7 @@ const LoginPage = () => {
 
     try {
       // Use axios to make the POST request
-      const response = await axios.post('http://localhost:5001/login/login', formData);
+      const response = await axios.post('https://emergency-qrcode-system-backend.onrender.com/login/login', formData);
 
       if (response.status === 200) {
         const { token, user } = response.data;

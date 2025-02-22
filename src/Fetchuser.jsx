@@ -8,7 +8,7 @@ const Users = () => {
   // Fetch users data from the backend
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/users'); // Update with your backend URL
+      const response = await fetch('https://emergency-qrcode-system-backend.onrender.com/api/users'); // Update with your backend URL
       const data = await response.json();
       setUsers(data);  // Store fetched users in state
     } catch (error) {

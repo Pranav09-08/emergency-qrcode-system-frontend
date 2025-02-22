@@ -21,7 +21,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5001/login/dashboard', {
+        const response = await axios.get('https://emergency-qrcode-system-backend.onrender.com/login/dashboard', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
