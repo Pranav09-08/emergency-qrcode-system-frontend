@@ -110,7 +110,7 @@ const VoiceNote = () => {
                     <button
                         onClick={startRecording}
                         disabled={isUploading}
-                        className="btn btn-primary btn-lg w-100 mb-3"
+                        className="btn btn-primary btn-lg w-100 mb-3 p-4 fw-bold fs-4"
                     >
                         🎙 Start
                     </button>
@@ -120,7 +120,7 @@ const VoiceNote = () => {
                     <button
                         onClick={stopRecording}
                         disabled={status !== "recording"}
-                        className="btn btn-danger btn-lg w-100 mb-3"
+                        className="btn btn-danger btn-lg w-100 mb-3 p-4 fw-bold fs-4"
                     >
                         ⏹ Stop
                     </button>
