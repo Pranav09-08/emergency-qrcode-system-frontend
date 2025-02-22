@@ -20,7 +20,7 @@ const EmployeeDetails = () => {
             setError("Invalid QR Code");
             return;
         }
-    
+
         axios.get(`https://emergency-qrcode-system-backend.onrender.com/api/employees/${qr_code}`)
             .then(response => {
                 console.log(response.data); // Log the response to check if the data is being received correctly
@@ -31,11 +31,23 @@ const EmployeeDetails = () => {
                 setError("Employee not found");
             });
     }, [qr_code]);
-    
 
-    const handleSOS = () => {
+
+    const handleSOS = async (user_id) => {
+        try {
+            // Sending the request with user_id as a query parameter in the URL
+            const response = await axios.post(`http://localhost:5001/sos/send-alert?user_id=${user_id}`);
+
+            if (response.data.message) {
+                alert(response.data.message); // Show success message if sent successfully
+            }
+        } catch (error) {
+            console.error("Error sending SOS alert:", error.response?.data || error.message);
+            alert("Failed to send SOS alert. Please try again.");
+        }
         setShowSOSModal(true);
     };
+
 
     const confirmSOS = () => {
         if (employee) {
@@ -101,11 +113,16 @@ const EmployeeDetails = () => {
                                     <p><strong>Allergies:</strong> {employee.allergies || "None"}</p>
                                 </Card.Body>
                             </Card>
-                            
-                            <Button variant="danger" className="w-100 mb-3 p-3 fw-bold" onClick={handleSOS}>
+
+                            <Button
+                                variant="danger"
+                                className="w-100 mb-3 p-3 fw-bold"
+                                onClick={() => handleSOS(employee.user_id)} // Pass employee.user_id dynamically
+                            >
                                 🚨 SOS Alert
                             </Button>
-                            
+
+
                             <div className="text-left">
                                 {isRecording ? (
                                     <Button variant="danger" className="w-100 p-3" onClick={stopRecording}>
@@ -140,7 +157,7 @@ const EmployeeDetails = () => {
                     <Modal.Title>Confirm SOS Alert</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Are you sure you want to send an SOS alert to 
+                    Are you sure you want to send an SOS alert to
                     <strong> {employee?.emergency_contact_name} ({employee?.emergency_contact_phone})</strong>?
                 </Modal.Body>
                 <Modal.Footer>
