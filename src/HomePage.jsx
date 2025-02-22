@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './css/HomePage.css';
 import { FaShieldAlt, FaQrcode, FaUsers, FaPhoneAlt } from 'react-icons/fa';
 
 const HomePage = () => {
