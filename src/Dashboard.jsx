@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Alert, Spinner, Badge, ListGroup } from 'react-bootstrap';
 import { FaSignOutAlt, FaBell, FaUserPlus, FaExclamationCircle } from 'react-icons/fa';
 import axios from 'axios';
+import './css/Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -9,6 +11,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
   const [incidentReports, setIncidentReports] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -49,41 +52,43 @@ const Dashboard = () => {
   };
 
   return (
-    <Container fluid className="d-flex flex-column vh-100 p-4">
-      <Row className="flex-grow-1">
-        <Col>
-          <Card className="h-100 border-0 shadow-sm rounded-lg">
-            <Card.Body className="d-flex flex-column p-4">
+    <Container fluid className="dashboard-container">
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <Card className="main-card shadow-sm rounded-lg">
+            <Card.Body>
               <h1 className="text-center text-primary mb-4">Dashboard</h1>
 
               {message && <Alert variant={message.type}>{message.text}</Alert>}
 
               {loading ? (
-                <div className="text-center flex-grow-1 d-flex flex-column justify-content-center">
+                <div className="text-center">
                   <Spinner animation="border" variant="primary" />
                   <p>Loading user data...</p>
                 </div>
               ) : userData ? (
                 <>
-                  <h3>Welcome, {userData.full_name}</h3>
+                  <h3 className="text-dark">Welcome, {userData.full_name}</h3>
                   <p>Email: <strong>{userData.email}</strong></p>
                   <p>Role: <strong>{userData.role}</strong></p>
 
-                  <div className="mt-3 mb-3 d-flex justify-content-between">
-                    <Button variant="info" className="d-flex align-items-center">
+                  <div className="button-group mt-4">
+                    <Button variant="info" className="d-flex align-items-center me-3">
                       <FaBell className="me-2" />
                       Notifications <Badge bg="danger" className="ms-2">{notifications.length}</Badge>
                     </Button>
 
-                    {userData.role === 'admin' && (
-                      <Button variant="success" className="d-flex align-items-center">
-                        <FaUserPlus className="me-2" />
-                        Employee Registration
-                      </Button>
-                    )}
+                    <Button
+                      variant="success"
+                      className="d-flex align-items-center"
+                      onClick={() => navigate('/register')}  // Navigate to /register
+                    >
+                      <FaUserPlus className="me-2" />
+                      Employee Registration
+                    </Button>
                   </div>
 
-                  <Card className="mt-4 border-0 shadow-sm rounded-lg">
+                  <Card className="mt-4 border-0 shadow-sm rounded-lg incident-card">
                     <Card.Body>
                       <h5 className="text-secondary">
                         <FaExclamationCircle className="me-2" />
@@ -106,7 +111,7 @@ const Dashboard = () => {
                     </Card.Body>
                   </Card>
 
-                  <div className="mt-auto">
+                  <div className="mt-4">
                     <Button
                       variant="danger"
                       onClick={handleLogout}

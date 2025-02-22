@@ -7,6 +7,7 @@ import AdminRegistrationForm from './AdminRegister';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import EmployeeRegistration from './EmployeeRegistration';
 // import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/adminregister" element={<AdminRegistrationForm />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/register" element={<EmployeeRegistration/>}/>
         </Routes>
       </Router>
     </div>

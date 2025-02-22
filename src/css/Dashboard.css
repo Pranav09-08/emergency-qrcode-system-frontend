@@ -1,0 +1,37 @@
+/* src/css/Dashboard.css */
+
+.dashboard-container {
+    min-height: 100vh;
+    background: #f8f9fa;
+    padding: 2rem;
+  }
+  
+  .main-card {
+    background: #fff;
+    border: none;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .incident-card {
+    background: #f8f9fa;
+  }
+  
+  .incident-card h5 {
+    color: #6c757d;
+  }
+  
+  .badge-warning {
+    background-color: #ffc107;
+  }
+  
+  .badge-success {
+    background-color: #28a745;
+  }
+  
