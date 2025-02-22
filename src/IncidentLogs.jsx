@@ -15,7 +15,12 @@ const IncidentReportsCard = () => {
                 const response = await axios.get(
                     "https://emergency-qrcode-system-backend.onrender.com/incident-log/get-incident"
                 );
-                setIncidentLogs(response.data.logs);
+
+                // Console log to check the structure
+                console.log("API Response:", response.data);
+
+                // Make sure response.data.logs exists and is an array
+                setIncidentLogs(response.data.logs || []);
             } catch (err) {
                 setError("Failed to fetch incident logs");
                 console.error("Error fetching incident logs:", err);
