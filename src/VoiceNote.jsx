@@ -59,7 +59,7 @@ const VoiceNote = () => {
 			formData.append("duration", duration);
 
 			const response = await axios.post(
-				"http://localhost:5001/recordings/voice/recordings",
+				"https://emergency-qrcode-system-backend.onrender.com/recordings/voice/recordings",
 				formData,
 				{
 					headers: { "Content-Type": "multipart/form-data" },
