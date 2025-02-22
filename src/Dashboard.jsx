@@ -74,10 +74,6 @@ const Dashboard = () => {
                   <p>Role: <strong>{userData.role}</strong></p>
 
                   <div className="button-group mt-4">
-                    <Button variant="info" className="d-flex align-items-center me-3">
-                      <FaBell className="me-2" />
-                      Notifications <Badge bg="danger" className="ms-2">{notifications.length}</Badge>
-                    </Button>
 
                     <Button
                       variant="success"
