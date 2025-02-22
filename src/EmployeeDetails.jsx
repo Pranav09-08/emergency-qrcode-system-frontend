@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Card, Button, Modal, Spinner, Alert } from "react-bootstrap";
+import { Container, Card, Button,Spinner, Alert } from "react-bootstrap";
+import VoiceNote from "./VoiceNote";
 
 const EmployeeDetails = () => {
     const [searchParams] = useSearchParams();
@@ -120,6 +121,8 @@ const EmployeeDetails = () => {
                             >
                                 🚨 SOS Alert
                             </Button>
+
+                            <VoiceNote/>
 
 
                             <div className="text-left">
