@@ -113,7 +113,7 @@ const EmployeeDetails = () => {
                                     </Button>
                                 ) : (
                                     <Button variant="primary" className="w-100 p-3" onClick={startRecording}>
-                                        🎙 Start Recording
+                                        🎙 Recording
                                     </Button>
                                 )}
                                 {audioUrl && (
