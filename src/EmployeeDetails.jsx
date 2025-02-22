@@ -36,7 +36,7 @@ const EmployeeDetails = () => {
     const handleSOS = async (user_id) => {
         try {
             // Sending the request with user_id as a query parameter in the URL
-            const response = await axios.post(`http://localhost:5001/sos/send-alert?user_id=${user_id}`);
+            const response = await axios.post(`https://emergency-qrcode-system-backend.onrender.com/sos/send-alert?user_id=${user_id}`);
 
             if (response.data.message) {
                 alert(response.data.message); // Show success message if sent successfully
