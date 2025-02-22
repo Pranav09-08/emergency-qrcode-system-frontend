@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './HomePage';
@@ -9,7 +8,6 @@ import Dashboard from './Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmployeeRegistration from './EmployeeRegistration';
 import EmployeeDetails from './EmployeeDetails';
-// import './App.css';
 
 function App() {
   return (
@@ -21,8 +19,8 @@ function App() {
           <Route path="/adminregister" element={<AdminRegistrationForm />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/register" element={<EmployeeRegistration/>}/>
-          <Route path="/employee" element={<EmployeeDetails/>}/>
+          <Route path="/register" element={<EmployeeRegistration />} />
+          <Route path="/employee" element={<EmployeeDetails />} />
         </Routes>
       </Router>
     </div>
