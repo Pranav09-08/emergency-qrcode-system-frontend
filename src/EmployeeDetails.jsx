@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Card, Button, Spinner, Alert } from "react-bootstrap";
 import VoiceNote from "./VoiceNote";
+import HrContactButton from "./HrContactButton";
 
 const EmployeeDetails = () => {
     const [searchParams] = useSearchParams();
@@ -97,7 +98,7 @@ const EmployeeDetails = () => {
         }
     };
     
-    
+
     return (
         <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
             <Card className="shadow-lg p-4 w-100 mx-auto" style={{ maxWidth: "500px", borderRadius: "16px", background: "#ffffff" }}>
@@ -130,6 +131,7 @@ const EmployeeDetails = () => {
 
                             {/* Add custom styling for VoiceNote component, assuming it has a button for recording */}
                             <VoiceNote />
+                            <HrContactButton/>
 
 
 
