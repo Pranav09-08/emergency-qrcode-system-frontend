@@ -13,7 +13,7 @@ const IncidentReportsCard = () => {
         const fetchIncidentLogs = async () => {
             try {
                 const response = await axios.get(
-                    "https://emergency-qrcode-system-backend.onrender.com/incident-logs/get-incident"
+                    "https://emergency-qrcode-system-backend.onrender.com/incident-log/get-incident"
                 );
                 setIncidentLogs(response.data.logs);
             } catch (err) {
