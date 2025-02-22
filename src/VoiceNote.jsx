@@ -75,13 +75,14 @@ const VoiceNote = () => {
 			formData.append("user_id", userId); // Pass the user_id
 
 			const response = await axios.post(
-				"https://emergency-qrcode-system-backend.onrender.com/recordings/voice/recordings",
+				`https://emergency-qrcode-system-backend.onrender.com/recordings/voice/recordings/${userId}`,
 				formData,
 				{
-					headers: { "Content-Type": "multipart/form-data" },
-					timeout: 10000,
+				  headers: { "Content-Type": "multipart/form-data" },
+				  timeout: 10000,
 				}
-			);
+			  );
+			  
 
 			if (response.status === 201) {
 				setUploadSuccess(true);
