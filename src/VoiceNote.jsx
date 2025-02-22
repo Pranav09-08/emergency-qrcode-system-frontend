@@ -8,6 +8,9 @@ const VoiceNote = () => {
 	const [isUploading, setIsUploading] = useState(false);
 	const [uploadSuccess, setUploadSuccess] = useState(false);
 
+	// Add state for user_id
+	const [userId, setUserId] = useState(null);
+
 	const { status, startRecording, stopRecording, clearBlobUrl } =
 		useReactMediaRecorder({
 			audio: true,
@@ -42,6 +45,17 @@ const VoiceNote = () => {
 		return () => clearInterval(interval);
 	}, [status]);
 
+	// Fetch user_id (Replace with your authentication method)
+	useEffect(() => {
+		const fetchUserId = async () => {
+			// Replace with your logic to get the logged-in user's ID
+			const storedUserId = localStorage.getItem("user_id") || 90007;
+			setUserId(storedUserId);
+		};
+
+		fetchUserId();
+	}, []);
+
 	const handleUpload = async (blob, duration) => {
 		if (!blob) {
 			setError("No recording to upload");
@@ -57,6 +71,7 @@ const VoiceNote = () => {
 			const extension = blob.type.split("/")[1].split(";")[0] || "webm";
 			formData.append("audio", blob, `recording_${Date.now()}.${extension}`);
 			formData.append("duration", duration);
+			formData.append("user_id", userId); // Pass the user_id
 
 			const response = await axios.post(
 				"https://emergency-qrcode-system-backend.onrender.com/recordings/voice/recordings",
@@ -90,32 +105,23 @@ const VoiceNote = () => {
 			)}
 
 			<div className="controls">
-				{/* Only show the start button if not recording */}
 				{status !== "recording" && (
 					<button
 						onClick={startRecording}
 						disabled={isUploading}
 						className="record-btn"
 					>
-						<svg className="mic-icon" viewBox="0 0 24 24">
-							<path
-								fill="currentColor"
-								d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
-							/>
-						</svg>
+						🎙 Start
 					</button>
 				)}
 
-				{/* Show Pause button only when recording */}
 				{status === "recording" && (
 					<button
 						onClick={stopRecording}
 						disabled={status !== "recording"}
 						className="stop-btn active"
 					>
-						<svg className="pause-icon" viewBox="0 0 24 24">
-							<path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
-						</svg>
+						⏹ Stop
 					</button>
 				)}
 			</div>
@@ -130,57 +136,35 @@ const VoiceNote = () => {
 				</div>
 			)}
 
-			{/* CSS Styles */}
 			<style jsx="true">{`
 				.voice-recorder-container {
 					padding: 20px;
 					max-width: 600px;
 					margin: 0 auto;
-					touch-action: manipulation;
-				}
-
-				h1 {
 					text-align: center;
-					color: #333;
-					margin-bottom: 30px;
 				}
-
 				.controls {
 					display: flex;
 					gap: 15px;
 					justify-content: center;
 					margin: 30px 0;
 				}
-
 				button {
-					padding: 20px 30px;
+					padding: 10px 20px;
 					font-size: 1.1rem;
 					border: none;
-					border-radius: 50px;
+					border-radius: 8px;
 					cursor: pointer;
 					transition: all 0.3s ease;
-					min-width: 150px;
 				}
-
 				.record-btn {
 					background-color: #4caf50;
 					color: white;
 				}
-
-				.record-btn.recording {
-					background-color: #6b6b6b;
-					cursor: not-allowed;
-				}
-
-				.stop-btn {
-					background-color: #6b6b6b;
-					color: white;
-				}
-
 				.stop-btn.active {
 					background-color: #ff4444;
+					color: white;
 				}
-
 				.error-message {
 					color: red;
 					padding: 15px;
@@ -189,7 +173,6 @@ const VoiceNote = () => {
 					margin: 20px 0;
 					text-align: center;
 				}
-
 				.success-message {
 					color: green;
 					margin-top: 10px;
@@ -198,15 +181,12 @@ const VoiceNote = () => {
 					border-radius: 4px;
 					text-align: center;
 				}
-
 				.upload-status {
 					text-align: center;
 					color: #666;
 					margin-top: 10px;
 				}
-
 				.recording-timer {
-					text-align: center;
 					font-size: 1.2rem;
 					margin: 20px 0;
 					color: #666;
