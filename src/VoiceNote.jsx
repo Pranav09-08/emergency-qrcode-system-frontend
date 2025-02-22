@@ -1,5 +1,3 @@
-<VoiceNote className="w-100 mb-3 p-5 fs-3" />
-
 import React, { useState, useEffect } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
 import axios from "axios";
@@ -98,15 +96,16 @@ const VoiceNote = () => {
     };
 
     return (
-        <div className="voice-recorder-container">
-
-            {error && <div className="error-message">⚠️ Error: {error}</div>}
+        <div className="container py-5">
+            {error && <div className="alert alert-danger">{`⚠️ Error: ${error}`}</div>}
 
             {status === "recording" && (
-                <div className="recording-timer">⏺ Recording: {seconds} seconds</div>
+                <div className="text-center mb-3">
+                    ⏺ Recording: {seconds} seconds
+                </div>
             )}
 
-            <div className="controls">
+            <div className="d-flex justify-content-center gap-3">
                 {status !== "recording" && (
                     <button
                         onClick={startRecording}
@@ -121,7 +120,7 @@ const VoiceNote = () => {
                     <button
                         onClick={stopRecording}
                         disabled={status !== "recording"}
-                        className="btn btn-danger btn-lg w-100 mb-3 active"
+                        className="btn btn-danger btn-lg w-100 mb-3"
                     >
                         ⏹ Stop
                     </button>
@@ -129,74 +128,16 @@ const VoiceNote = () => {
             </div>
 
             {isUploading && (
-                <div className="upload-status">⏳ Uploading recording...</div>
-            )}
-
-            {uploadSuccess && (
-                <div className="success-message">
-                    ✅ Recording submitted successfully!
+                <div className="text-center text-muted mb-3">
+                    ⏳ Uploading recording...
                 </div>
             )}
 
-            <style jsx="true">{`
-                .voice-recorder-container {
-                    padding: 30px;
-                    max-width: 600px;
-                    margin: 0 auto;
-                    text-align: center;
-                }
-                .controls {
-                    display: flex;
-                    gap: 20px;
-                    justify-content: center;
-                    margin: 40px 0;
-                }
-                button {
-                    padding: 15px 30px;
-                    font-size: 1.5rem;
-                    border: none;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                }
-                .record-btn {
-                    background-color: #4caf50;
-                    color: white;
-                }
-                .stop-btn.active {
-                    background-color: #ff4444;
-                    color: white;
-                }
-                .error-message {
-                    color: red;
-                    padding: 20px;
-                    background-color: #ffe6e6;
-                    border-radius: 8px;
-                    margin: 20px 0;
-                    text-align: center;
-                    font-size: 1.2rem;
-                }
-                .success-message {
-                    color: green;
-                    margin-top: 15px;
-                    padding: 15px;
-                    background-color: #e6ffe6;
-                    border-radius: 8px;
-                    font-size: 1.2rem;
-                    text-align: center;
-                }
-                .upload-status {
-                    text-align: center;
-                    color: #666;
-                    margin-top: 20px;
-                    font-size: 1.2rem;
-                }
-                .recording-timer {
-                    font-size: 2rem;
-                    margin: 30px 0;
-                    color: #333;
-                }
-            `}</style>
+            {uploadSuccess && (
+                <div className="alert alert-success text-center">
+                    ✅ Recording submitted successfully!
+                </div>
+            )}
         </div>
     );
 };

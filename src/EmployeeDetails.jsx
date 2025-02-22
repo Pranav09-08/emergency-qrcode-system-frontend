@@ -125,7 +125,8 @@ const EmployeeDetails = () => {
                             </Button>
 
                             {/* Add custom styling for VoiceNote component, assuming it has a button for recording */}
-                            <VoiceNote className="w-100 mb-3 p-4 fs-4" />
+                            <VoiceNote className="w-100 mb-3 p-4 fw-bold fs-4" />
+
 
                         </>
                     ) : (
