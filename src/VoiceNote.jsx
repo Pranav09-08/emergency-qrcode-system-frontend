@@ -49,7 +49,7 @@ const VoiceNote = () => {
 	useEffect(() => {
 		const fetchUserId = async () => {
 			// Replace with your logic to get the logged-in user's ID
-			const storedUserId = localStorage.getItem("user_id") || 90007;
+			const storedUserId = localStorage.getItem("user_id");
 			console.log(storedUserId);
 			setUserId(storedUserId);
 		};
