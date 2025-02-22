@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";  // Import axios for API calls
-import "./HrContactButton.css";
 
 const HrContactButton = () => {
     const [hrDetails, setHrDetails] = useState(null);
