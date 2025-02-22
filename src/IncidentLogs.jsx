@@ -91,10 +91,18 @@ const IncidentReportsCard = () => {
                                             <ul>
                                                 {log.recordings.map((rec) => (
                                                     <li key={rec.id}>
-                                                        <audio controls>
-                                                            <source src={rec.path} type={rec.mimeType} />
-                                                            Your browser does not support audio playback.
-                                                        </audio>
+                                                        <div>
+                                                            <audio controls>
+                                                                <source src={rec.path} type={rec.mimeType} />
+                                                                Your browser does not support audio playback.
+                                                            </audio>
+                                                            <div className="mt-2">
+                                                                <strong>Filename:</strong> {rec.filename} <br />
+                                                                <strong>Size:</strong> {(rec.size / 1024).toFixed(2)} KB <br />
+                                                                <strong>Duration:</strong> {rec.duration} seconds <br />
+                                                                <strong>Uploaded:</strong> {new Date(rec.createdAt).toLocaleString()}
+                                                            </div>
+                                                        </div>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -114,7 +122,6 @@ const IncidentReportsCard = () => {
                 )}
             </Card.Body>
         </Card>
-
     );
 };
 
