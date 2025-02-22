@@ -38,61 +38,101 @@ const EmployeeDetails = () => {
 
     const handleSOS = async (user_id) => {
         try {
-            // Sending the request with user_id as a query parameter in the URL
-            const response = await axios.post(`https://emergency-qrcode-system-backend.onrender.com/sos/send-alert?user_id=${user_id}`);
-
-            if (response.data.message) {
-                alert(response.data.message); // Show success message if sent successfully
+            // Assume these values are dynamically populated
+            const scanned_by_name = "John Doe"; // Replace with actual data
+            const scanned_by_phone = "123-456-7890"; // Replace with actual data
+            let latitude, longitude;
+    
+            // Capture the geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    latitude = position.coords.latitude;
+                    longitude = position.coords.longitude;
+    
+                    // 1. Sending the SOS alert email
+                    try {
+                        const response = await axios.post(
+                            `https://emergency-qrcode-system-backend.onrender.com/sos/send-alert?user_id=${user_id}`
+                        );
+    
+                        if (response.data.message) {
+                            alert(response.data.message); // Show success message if sent successfully
+                        }
+                    } catch (error) {
+                        console.error("Error sending SOS alert:", error.response?.data || error.message);
+                        alert("Failed to send SOS alert. Please try again.");
+                    }
+    
+                    // 2. Storing the incident log in the database
+                    try {
+                        const incidentResponse = await axios.post(
+                            'https://emergency-qrcode-system-backend.onrender.com/incident-log/incident', 
+                            {
+                                user_id,
+                                scanned_by_name,
+                                scanned_by_phone,
+                                scan_location_latitude: latitude,
+                                scan_location_longitude: longitude
+                            }
+                        );
+    
+                        if (incidentResponse.data.message) {
+                            console.log("Incident log added successfully");
+                        }
+                    } catch (error) {
+                        console.error("Error storing incident log:", error.response?.data || error.message);
+                        alert("Failed to store incident log. Please try again.");
+                    }
+    
+                }, (error) => {
+                    console.error("Error getting location:", error);
+                    alert("Failed to get location. Please try again.");
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
             }
         } catch (error) {
-            console.error("Error sending SOS alert:", error.response?.data || error.message);
-            alert("Failed to send SOS alert. Please try again.");
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
         }
     };
+    
 
 
-    const confirmSOS = () => {
-        if (employee) {
-            alert(`🚨 SOS Alert Sent to ${employee.emergency_contact_name} (${employee.emergency_contact_phone})`);
-        } else {
-            alert("⚠️ No emergency contact found.");
-        }
-        setShowSOSModal(false);
-    };
+   
+    // const startRecording = async () => {
+    //     try {
+    //         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    //         const mediaRecorder = new MediaRecorder(stream);
+    //         mediaRecorderRef.current = mediaRecorder;
+    //         audioChunksRef.current = [];
 
-    const startRecording = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const mediaRecorder = new MediaRecorder(stream);
-            mediaRecorderRef.current = mediaRecorder;
-            audioChunksRef.current = [];
+    //         mediaRecorder.ondataavailable = (event) => {
+    //             if (event.data.size > 0) {
+    //                 audioChunksRef.current.push(event.data);
+    //             }
+    //         };
 
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) {
-                    audioChunksRef.current.push(event.data);
-                }
-            };
+    //         mediaRecorder.onstop = () => {
+    //             const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+    //             const audioUrl = URL.createObjectURL(audioBlob);
+    //             setAudioUrl(audioUrl);
+    //         };
 
-            mediaRecorder.onstop = () => {
-                const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-                const audioUrl = URL.createObjectURL(audioBlob);
-                setAudioUrl(audioUrl);
-            };
+    //         mediaRecorder.start();
+    //         setIsRecording(true);
+    //     } catch (error) {
+    //         console.error("Error accessing microphone:", error);
+    //         alert("⚠️ Microphone access denied.");
+    //     }
+    // };
 
-            mediaRecorder.start();
-            setIsRecording(true);
-        } catch (error) {
-            console.error("Error accessing microphone:", error);
-            alert("⚠️ Microphone access denied.");
-        }
-    };
-
-    const stopRecording = () => {
-        if (mediaRecorderRef.current) {
-            mediaRecorderRef.current.stop();
-            setIsRecording(false);
-        }
-    };
+    // const stopRecording = () => {
+    //     if (mediaRecorderRef.current) {
+    //         mediaRecorderRef.current.stop();
+    //         setIsRecording(false);
+    //     }
+    // };
 
     return (
         <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
