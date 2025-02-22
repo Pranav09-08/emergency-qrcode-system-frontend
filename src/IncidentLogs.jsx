@@ -20,7 +20,7 @@ const IncidentReportsCard = () => {
                 console.log("API Response:", response.data);
 
                 // Make sure response.data.logs exists and is an array
-                setIncidentLogs(response.data.logs || []);
+                setIncidentLogs(response.data || []);
             } catch (err) {
                 setError("Failed to fetch incident logs");
                 console.error("Error fetching incident logs:", err);
