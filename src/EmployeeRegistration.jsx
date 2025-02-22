@@ -75,7 +75,7 @@ const EmployeeRegistration = () => {
     setIsSubmitting(true);
     const newUniqueCode = `EMP-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
     setUniqueCode(newUniqueCode);
-    const qrCodeUrl = `https://teacher-attainment-system-frontend.vercel.app/employee?id=${newUniqueCode}`;
+    const qrCodeUrl = `https://emergency-qrcode-system-frontend.vercel.app/employee?id=${newUniqueCode}`;
     setQrValue(qrCodeUrl);
 
     try {
