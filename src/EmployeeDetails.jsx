@@ -124,28 +124,7 @@ const EmployeeDetails = () => {
                                 🚨 SOS Alert
                             </Button>
 
-                            {/* <VoiceNote/> */}
-
-
-                            <div className="text-left">
-                                {isRecording ? (
-                                    <Button variant="danger" className="w-100 p-3" onClick={stopRecording}>
-                                        ⏹ Stop Recording
-                                    </Button>
-                                ) : (
-                                    <Button variant="primary" className="w-100 p-3" onClick={startRecording}>
-                                        🎙 Recording
-                                    </Button>
-                                )}
-                                {audioUrl && (
-                                    <div className="mt-3">
-                                        <audio controls src={audioUrl} className="w-100"></audio>
-                                        <a href={audioUrl} download="recording.wav" className="btn btn-link text-primary mt-2">
-                                            ⬇ Download Recording
-                                        </a>
-                                    </div>
-                                )}
-                            </div>
+                            <VoiceNote/>
                         </>
                     ) : (
                         <div className="text-center">
