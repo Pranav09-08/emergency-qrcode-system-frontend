@@ -50,7 +50,7 @@ const VoiceNote = () => {
 		const fetchUserId = async () => {
 			// Replace with your logic to get the logged-in user's ID
 			const storedUserId = localStorage.getItem("user_id") || 90007;
-			console(storedUserId);
+			console.log(storedUserId);
 			setUserId(storedUserId);
 		};
 
