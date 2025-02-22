@@ -21,7 +21,6 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<EmployeeRegistration />} />
           <Route path="/employee" element={<EmployeeDetails />} />
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>
